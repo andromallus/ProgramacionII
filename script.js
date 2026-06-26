@@ -12,23 +12,35 @@ botonAgregar.addEventListener("click", function () { agregarTarea() })
 function agregarTarea() {
     const tarea = inputTarea.value
     if (tarea.length > 0) {
-        alert("Tarea agregada: " + tarea)
+        // alert("Tarea agregada: " + tarea)
+        tareas.push(tarea)
+        renderizarTareas()
     }
     else {
         alert("Debes ingresar una tarea")
     }
-    tareas.push(tarea)
-    renderizarTareas()
+
 }
 
 function renderizarTareas() {
 
-    alert("esta llegando al render")
+    // alert("esta llegando al render")
     lista.innerHTML = ""
-    tareas.forEach(function (tarea) {
+    tareas.forEach(function (tarea, index) {
+        const botonEliminar = document.createElement("button")
+        botonEliminar.textContent = "X"
+        botonEliminar.className = "botonEliminar"
+        botonEliminar.addEventListener("click", function () { eliminarTarea(index) })
 
         const li = document.createElement("li")
         li.textContent = tarea
+        li.appendChild(botonEliminar)
+
         lista.appendChild(li)
     })
+}
+
+function eliminarTarea(index) {
+    tareas.splice(index, 1)
+    renderizarTareas()
 }
